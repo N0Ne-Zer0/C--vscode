@@ -1,6 +1,5 @@
 #include<iostream>
 using namespace std;
-using ll=long long;
 
 const int Max=3e5+5;
 
