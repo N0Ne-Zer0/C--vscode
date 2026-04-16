@@ -1,23 +1,40 @@
 #include<iostream>
 using namespace std;
+#define int long long
 
-const int Max=5e5+5;
-int A[Max],B[Max];
-int preb[Max];
+const int maxn=2e5+5;
 
+int g[maxn][260];
 
-int main()
+signed main()
 {
-    int N,M;
-    cin>>N,M;
-    for(int i=1;i<=N;i++)cin>>A[i];
-    for(int i=1;i<=M;i++)
+    string S,T;
+    int ans=0;
+    cin>>S>>T;
+    for(int j='a';j<='z';j++)
     {
-        cin>>B[i];
-        preb[i]=preb[i-1]+B[i];
+        int tem=S.size();
+        for(int i=S.size()-1;i>=0;i--)
+        {
+            if(S[i]==j)
+            {
+                tem=i;
+            }
+            g[i][j]=tem;
+        }
     }
-    for(int i=1;i<=N;i++)
+    for(int i=0;i<S.size();i++)
     {
-        
+        int x=i;
+        int j;
+        for(j=0;j<T.size()&&x<S.size();j++)
+        {
+            x=g[x][T[j]];
+            if(x==S.size())break;
+            x++;
+        }
+        if(j==T.size())ans+=S.size()-x+1;
     }
+    ans=S.size()*(S.size()+1)/2-ans;
+    cout<<ans;
 }
