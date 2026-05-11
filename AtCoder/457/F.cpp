@@ -1,4 +1,3 @@
-// #include<bits/stdc++.h>
 #include<iostream>
 #include<vector>
 #include<cmath>
@@ -7,8 +6,6 @@ using namespace std;
 
 const int maxn=2e5+5;
 const int mod=1e9+7;
-
-int N,M;
 
 void sol()
 {
