@@ -14,7 +14,25 @@ const int INF=1e9;
 
 void sol()
 {
-    
+    int n,k,a=0,b=0,c=0;
+    string s1,s2;
+    cin>>n>>k;
+    cin>>s1>>s2;
+    for(int i=0;i<n;i++)
+    {
+        if(s1[i]=='1')a++;
+        if(s2[i]=='1')b++;
+        if(s1[i]!=s2[i])c++;
+    }
+    a=a*(n-a);
+    b=b*(n-b);
+    c=c*(n-c);
+    int sum=(1<<k)+1,ans=0;
+    int sa,sb,sc;
+    sc=sum/3;
+    sa=sb=(sum-sc)/2;
+    ans=a*sa+b*sb+c*sc;
+    cout<<ans<<'\n';
 }
 
 signed main()

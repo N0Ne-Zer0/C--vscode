@@ -14,7 +14,19 @@ const int INF=1e9;
 
 void sol()
 {
-    
+    int n;
+    cin>>n;
+    vector<int>a(4*n+1);
+    for(int i=1;i<=n;i++)
+    {
+        a[i]=i;
+        a[2*n-i+1]=i;
+        a[3*n+1-i]=i;
+        a[3*n+i]=i;
+    }
+    if(n%2)swap(a[(3*n+1)/2],a[(n+3)/2]);
+    for(int i=1;i<=4*n;i++)cout<<a[i]<<' ';
+    cout<<'\n';
 }
 
 signed main()

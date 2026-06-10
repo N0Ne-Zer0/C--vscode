@@ -14,7 +14,20 @@ const int INF=1e9;
 
 void sol()
 {
-    
+    int n,x,y,z;
+    cin>>n>>x>>y>>z;
+    int ans=MAX;
+    ans=min(ans,(n+x+y-1)/(x+y));
+    int r=x*z,res;
+    if(r>=n)res=(n+x-1)/x;
+    else
+    {
+        n-=x*z;
+        res=z;
+        res+=(n+x+10*y-1)/(x+10*y);
+    }
+    ans=min(ans,res);
+    cout<<ans<<'\n';
 }
 
 signed main()
