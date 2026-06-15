@@ -9,67 +9,57 @@ const int maxn=2e5+5;
 const int MAX=0x7fffffffffffffff;
 const int mod=1e9+7;
 
-int a[maxn],b[maxn],h[maxn];
+inline int lb(int x)
+{
+    return -x&x;
+}
+inline void add(vector<int>&BIT,int x,int v=1)
+{
+    for(int i=x;i<BIT.size();i+=lb(i))
+    {
+        BIT[i]+=v;
+    }
+}
+inline int search(const vector<int>&BIT,int x)
+{
+    int res=0;
+    for(int i=x;i>0;i-=lb(i))
+    {
+        res+=BIT[i];
+    }
+    return res;
+}
 
-void sol()
+
+inline void sol()
 {
     int n;
-    int al=0,dmv=0;
     cin>>n;
-    h[0]=MAX;
-    for(int i=1;i<=n;i++)
-    {
-        h[i]=n;
-        cin>>a[i];
-        al+=a[i];
-    }
-    b[n]=a[n];
-    dmv+=b[n];
-    int x=n,sum=0,tx=n,tsum=0;
-    for(int i=n-1;i>=1;i--)
-    {
-        b[i]=min(b[i+1],a[i]);
-        dmv+=b[i];
-        if(b[i]==b[tx])
-        {
-            tsum++;
-        }
-        else
-        {
-            if(tsum>sum)
-            {
-                sum=tsum;
-                x=tx;
-            }
-            tx=i;
-            tsum=0;
-        }
-    }
-    if(tsum>sum)
-    {
-        sum=tsum;
-        x=tx;
-    }
-    for(int i=x;i>=x-sum;i--)
-    {
-        b[i]--;
-    }
+    int res=0;
+    vector<int>a(n+1),th(n+1);
+    vector<int>B(n+1,0),Bi(n+1,0),bk(n+1,0);
+    vector<int>cnt(n+1,0),suf(n+1,0);
+    for(int i=1;i<=n;i++)cin>>a[i];
     for(int i=n;i>=1;i--)
     {
-        if(b[i]==0)
-        {
-            break;
-        }
-        h[b[i]]=min(h[b[i]],i)-1;
+        res+=a[i]*(n-i);
+        res-=search(Bi,a[i]-1)+a[i]*(search(B,n)-search(B,a[i]-1));
+        th[i]=search(B,a[i])-search(B,a[i]-1);
+        add(B,a[i]);
+        add(Bi,a[i],a[i]);
     }
-    for(int i=n-1;i>=1;i--)
+    int ti=0,bns=0;
+    for(int i=1;i<=n;i++)
     {
-        h[i]=min(h[i],h[i+1]);
+        int tem=search(bk,n)-search(bk,a[i]-1)+th[i];
+        if(tem>bns)
+        {
+            ti=i;
+            bns=tem;
+        }
+        add(bk,a[i]);
     }
-    for(int i=1;i<=n;i++)cout<<b[i]<<' ';
-    cout<<'\n';
-    for(int i=1;i<=n;i++)cout<<h[i]<<' ';
-    cout<<'\n';
+    cout<<res+bns<<'\n';
 }
 
 signed main()

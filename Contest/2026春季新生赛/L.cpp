@@ -8,104 +8,77 @@ using namespace std;
 
 const int maxn = 5e5 + 5;
 
-int n, k, L, l[maxn], r[maxn], diff[maxn];
-int x[maxn];
-int sl[maxn],sr[maxn],cnt,pre[maxn];
-vector<int>vec;
+
 
 void sol()
 {
-    cin >> n >> k >> L;
-    for (int i = 0; i < n; i++)
+    int n,k,L;
+    cin>>n>>k>>L;
+    vector<int>a(2*n);
+    vector<pair<int,int>>A(n);
+    for(int i=0;i<n;i++)
     {
-        cin >> l[i] >> r[i];
-        vec.push_back(l[i]);
-        vec.push_back(r[i] + 1);
+        int l,r;
+        cin>>l>>r;
+        A[i]={l,r};
+        a.push_back(l);
+        a.push_back(r+1);
     }
-
-
-    sort(vec.begin(), vec.end());
-    vec.erase(unique(vec.begin(), vec.end()), vec.end());
-
-
-    for (int i = 0; i < n; i++)
+    sort(a.begin(),a.end());
+    int len=unique(a.begin(),a.end())-a.begin();
+    vector<int>diff(len,0);
+    vector<bool>res(len,0);
+    for(auto [l,r]:A)
     {
-        int dl = lower_bound(vec.begin(), vec.end(), l[i]) - vec.begin();
-        int dr = lower_bound(vec.begin(), vec.end(), r[i] + 1) - vec.begin();
-        diff[dl]++;
-        diff[dr]--;
+        int li=lower_bound(a.begin(),a.end(),l)-a.begin();
+        int ri=lower_bound(a.begin(),a.end(),r+1)-a.begin();
+        diff[li]++;
+        diff[ri]--;
     }
-
-
-    x[0] = diff[0];
-    int cur=0;
-    for (int i = 0; i < vec.size(); i++)
+    int sum=0,ans=0;
+    for(int i=0;i<len;i++)
     {
-        cur+=diff[i];
-        x[i]=cur;
-    }
-
-
-    int total=0;
-    for(int i=0;i<vec.size()-1;i++)
-    {
-        int tl=vec[i],tr=vec[i+1];
-        if(x[i]>k)total+=tr-tl;//左闭右开
-        if(x[i]==k+1)
+        sum+=diff[i];
+        if(sum>k&&i+1<len)
         {
-            sl[cnt]=tl;
-            sr[cnt]=tr-1;
-            cnt++;
+            ans+=a[i+1]-a[i];
+        }
+        if(sum==k+1)
+        {
+            res[i]=1;
         }
     }
-
-    pre[0]=sr[0]-sl[0]+1;
-    for(int i=1;i<cnt;i++)
+    int minus=0;
+    int l=len-1,r=0,tminus=0;
+    for(int i=0;i<len;i++)
     {
-        pre[i]=pre[i-1]+sr[i]-sl[i]+1;
-    }
-
-/*    cout<<total<<'\n';
-
-    for(int i=0;i<cnt;i++)
-    {
-        cout<<sl[i]<<' '<<sr[i]<<'\n';
-    }
-*/
-
-
-    int left=0,right=0,ans=0;
-    while(sr[right]-sl[0]+1<L)right++;
-    right--;
-    for(;right<cnt;right++)
-    {
-        
-        while(sr[right]-sl[left]+1>L&&left<=right)left++;
-        if(left>right)continue;
-
-        int tem;
-        if(left>0)tem=pre[right]-pre[left-1];
-        else tem=pre[right];
-
-        int len=sr[right]-sl[left]+1;
-        
-        //L固定在右
-        int Lextra=0;
-        if(left>0&&sr[right]-L+1>=0&&sr[right]-L+1<=sr[left-1])
+        if(res[i]==0)continue;
+        r=max(r,i);
+        while(r<len&&a[r]-a[i]<L)
         {
-            Lextra=sr[left-1]-(sr[right]-L+1)+1;
+            tminus+=(a[r+1]-a[r])*res[r];
+            r++;
         }
-
-        //L固定在左
-        int Rextra=0;
-        if(right<cnt-1&&sl[left]+L-1>=sl[right+1])
-        {
-            Rextra=(sl[left]+L-1)-sl[right+1]+1;
-        }
-        tem+=max(Rextra,Lextra);
-        ans=max(ans,tem);
+        tminus+=(L-a[r]+a[i])*res[r];
+        minus=max(minus,tminus);
+        tminus-=a[i+1]-a[i];
+        tminus=max(tminus,0ll);
     }
-    cout<<total-ans<<endl;
+    for(int i=len-2;i>=0;i--)
+    {
+        if(res[i]==0)continue;
+        l=min(l,i);
+        while(l>=0&&a[i+1]-a[l]<L)
+        {
+            tminus+=(a[l+1]-a[l])*res[l];
+            l--;
+        }
+        tminus+=(L-a[i+1]+a[l+1])*res[l];
+        minus=max(minus,tminus);
+        tminus-=a[i+1]-a[i];
+        tminus=max(tminus,0ll);
+    }
+    cout<<ans-minus;
 }
 
 

@@ -64,8 +64,6 @@ void sol()
         sum+=x*k;
         suf[i]=sum;
     }
-    // for(int i=1;i<=n;i++)cout<<pre[i]<<" \n"[i==n];
-    // for(int i=1;i<=n;i++)cout<<suf[i]<<" \n"[i==n];
     for(int i=1;i<=n;i++)cout<<pre[(i+n-2-maxi)%n+1]+suf[(i-maxi+n-1)%n+1]<<" \n"[i==n];
 }
 

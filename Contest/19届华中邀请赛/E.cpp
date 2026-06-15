@@ -37,6 +37,8 @@ bool check(int T)
 
 void sol()
 {
+    ios::sync_with_stdio(0);
+    cin.tie(0);
     cin>>n>>x>>y>>z;
     int l=1,r=n;
     int ans=n;
