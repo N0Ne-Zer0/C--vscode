@@ -1,8 +1,0 @@
-{
-  "permissions": {
-    "allow": [
-      "Bash(g++ -std=c++17 E.cpp -o E.exe)",
-      "Bash(g++ -std=c++20 -O2 -o output/E.exe E.cpp)"
-    ]
-  }
-}

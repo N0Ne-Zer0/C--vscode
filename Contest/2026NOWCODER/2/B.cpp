@@ -3,44 +3,56 @@
 #include<vector>
 #include<algorithm>
 using namespace std;
-#define int unsigned long long
+#define int long long
 
 const int maxn=3e5+5;
 const int MAX=0x7fffffffffffffff;
 const int mod=998244353;
 const int INF=1e9;
 
+struct LinearBasis {
+    vector<int>d;
+ 
+    LinearBasis() {
+        d.assign(63,0);
+    }
+ 
+    bool insert(int val) {
+        for (int i = 61; i >= 0; i--) {
+            if ((val >> i) & 1) {
+                if (!d[i]) {
+                    d[i] = val;
+                    return true;
+                }
+                val ^= d[i];
+            }
+        }
+        return false;
+    }
+ 
+    int query_max() {
+        int res = 0;
+        for (int i = 61; i >= 0; i--) {
+            if ((res ^ d[i]) > res) {
+                res ^= d[i];
+            }
+        }
+        return res;
+    }
+};
+
 void sol()
 {
     int n,S=0;
     cin>>n;
-    vector<int>a(n),b(n);
+    vector<int>a(n);
     for(auto &x:a)cin>>x;
     sort(a.begin(),a.end());
     for(auto x:a)S^=x;
     int msk=~S;
-    for(int i=0;i<n;i++)b[i]=a[i]&msk;
-    vector<int>p(64,0);
-    auto insert=[&](int x)
-    {
-        for(int i=63;~i;i--)
-        {
-            if(!(x>>i))continue;
-            if(!p[i])
-            {
-                p[i]=x;
-                break;
-            }
-            x^=p[i];
-        }
-    };
-    for(auto x:b)insert(x);
-    int res=0;
-    for(int i=63;~i;i--)
-    {
-        res=max(res,res^p[i]);
-    }
-    cout<<S+2*res<<'\n';
+    LinearBasis lb;
+    for(int i=0;i<n;i++)lb.insert(a[i]&msk);
+    cout<<S+2*lb.query_max()<<'\n';
 }
 
 signed main()
