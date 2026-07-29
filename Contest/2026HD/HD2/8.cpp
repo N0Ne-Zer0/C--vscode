@@ -34,22 +34,14 @@ void sol()
         s[d[i]][0]++;
         s[d[i]].push_back(i);
     }
-    for(int i=mi;i<=ma;i++)
-    {
-        if(s[i][0]==0)
-        {
-            NO;
-            return;
-        }
-    }
     if(s[mi][0]>2)
     {
         NO;
         return;
     }
-    if(s[mi][0]>1)
+    if(s[mi][0]==2)
     {
-        if(ma<2*mi-1)
+        if(ma==2*mi-2)
         {
             for(int i=mi;i<=ma;i++)
             {
@@ -88,7 +80,7 @@ void sol()
     }
     else
     {
-        if(ma<2*mi)
+        if(ma==2*mi-1)
         {
             for(int i=mi+1;i<=ma;i++)
             {

@@ -1,14 +1,16 @@
 #include<iostream>
-#include<queue>
 #include<vector>
+#include<bitset>
 #include<algorithm>
 using namespace std;
 #define int long long
 
-const int maxn=3e5+5;
+const int maxn=2e6+5;
 const int MAX=0x7fffffffffffffff;
 const int mod=998244353;
 const int INF=1e9;
+
+
 
 void sol()
 {
