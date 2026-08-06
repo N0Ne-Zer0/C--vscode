@@ -15,9 +15,31 @@ void sol()
     int n;
     cin>>n;
     int mid;
-    if(n%2)mid=(n+1)/2;
-    else mid=n/2+1;
     vector<int>p(n+1,0);
+    if(n%2)
+    {
+        if(n==1)
+        {
+            cout<<"1\n";
+            return;
+        }
+        p[1]=1;
+        p[3]=2;
+        int x=n/2+3;
+        for(int i=5;i<=n;i+=2)
+        {
+            p[i]=x++;
+        }
+        x=n/2+2;
+        for(int i=2;i<=n;i+=2)
+        {
+            p[i]=x--;
+        }
+        for(int i=1;i<=n;i++)cout<<p[i]<<' ';
+        cout<<'\n';
+        return;
+    }
+    else mid=n/2+1;
     int idx=-1;
     for(int i=mid;i<=n;i++)
     {
