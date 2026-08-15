@@ -20,7 +20,6 @@ struct Edge
     }
 };
 
-
 int n,m;
 vector<Edge>edge;
 vector<int>F;
@@ -59,13 +58,14 @@ void Kruskal()
 void sol()
 {
     cin>>n>>m;
-    edge.assign(m,{});
+    edge.clear();
+    edge.reserve(m);
     F.assign(n+1,0);
     for(int i=1;i<=m;i++)
     {
         int u,v,w;
         cin>>u>>v>>w;
-        edge.emplace_back(u,v,w);
+        edge.push_back({u,v,w});
     }
     Kruskal();
 }

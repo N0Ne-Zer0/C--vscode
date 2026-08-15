@@ -27,7 +27,7 @@ bool SPFA(int s)
     h[s]=0;
     queue<int>q;
     vector<int>vis(n+1,0),cnt(n+1,0);
-    q.emplace(s);
+    q.push(s);
     vis[s]=1;
     while (!q.empty())
     {
@@ -55,7 +55,7 @@ bool SPFA(int s)
 void Dijkstra(int s)
 {
     priority_queue<pair<int,int>>q;
-    q.emplace(0,s);
+    q.push({0,s});
     dist[s][s]=0;
     while(!q.empty())
     {
@@ -68,7 +68,7 @@ void Dijkstra(int s)
             if(dist[s][v]>d+w)
             {
                 dist[s][v]=d+w;
-                q.emplace(-dist[s][v],v);
+                q.push({-dist[s][v],v});
             }
         }
     }
@@ -78,7 +78,7 @@ void Johnson()
 {
     for(int i=1;i<=n;i++)
     {
-        edge[0].emplace_back(i,0);
+        edge[0].push_back({i,0});
     }
     if(SPFA(0))
     {
@@ -114,7 +114,7 @@ void sol()
     {
         int u,v,w;
         cin>>u>>v>>w;
-        edge[u].emplace_back(v,w);
+        edge[u].push_back({v,w});
     }
     Johnson();
 }

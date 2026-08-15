@@ -51,7 +51,7 @@ void sol()
     {
         int u,v,w;
         cin>>u>>v>>w;
-        edge[u].emplace_back(v,w);
+        edge[u].push_back({v,w});
     }
     Dijkstra();
     for(int i=1;i<=n;i++)

@@ -11,20 +11,18 @@ const int MAX=0x7fffffffffffffff;
 const int mod=998244353;
 const int INF=1e9;
 
+const int MAXL=100;
 struct LinearBasis {
-    static const int MAXL=100;
     vector<int>val;
     bitset<MAXL>b[MAXL];
  
-    LinearBasis(){clear();}
-
-    void clear()
+    LinearBasis()
     {
         val.assign(MAXL,0);
         for(auto x:b)x.reset();
     }
  
-    void insert(bitset<MAXL>x,int v) {
+    void insert(bitset<MAXL>x,int v){
         for(int i=MAXL-1;i>=0;i--)
         {
             if(!x[i])continue;
@@ -59,11 +57,11 @@ void sol()
 
 signed main()
 {
-    // ios::sync_with_stdio(0);
-    // cin.tie(0);
+    ios::sync_with_stdio(0);
+    cin.tie(0);
     int T;
     T = 1;
     cin>>T;
     while (T--)sol();
-    system("pause");
+    // system("pause");
 }

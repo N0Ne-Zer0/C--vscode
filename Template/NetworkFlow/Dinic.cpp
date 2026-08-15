@@ -28,8 +28,8 @@ struct DinicMaxFlow
 
     void add_edge(int u,int v,int cap)
     {
-        e[u].emplace_back(v,cap,e[v].size());
-        e[v].emplace_back(u,0,e[u].size()-1);
+        e[u].push_back({v,cap,(int)e[v].size()});
+        e[v].push_back({u,0,(int)e[u].size()-1});
     }
 
     bool BFS()
@@ -38,7 +38,7 @@ struct DinicMaxFlow
         fill(begin(cur),end(cur),0);        //重置当前弧
         queue<int>q;
         level[S]=1;
-        q.emplace(S);
+        q.push(S);
         while(!q.empty())
         {
             int u=q.front();
@@ -47,7 +47,7 @@ struct DinicMaxFlow
             {
                 if(level[v]||c==0)continue;
                 level[v]=level[u]+1;
-                q.emplace(v);
+                q.push(v);
             }
         }
         return level[T];

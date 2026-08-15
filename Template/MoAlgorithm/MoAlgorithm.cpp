@@ -16,7 +16,7 @@ struct Q
 };
 vector<Q>q;
 vector<int>ans(maxn);
-int B;
+int n,B;
 
 bool cmp(const Q &x,const Q &y)
 {
@@ -36,14 +36,15 @@ void del(int pos,int &cur)
 
 void Mo()
 {
+    B=max(1ll,(int)sqrt(n));
     sort(q.begin(),q.end(),cmp);
     int curL=1,curR=0,cur=0;
     for(auto [l,r,id]:q)
     {
         while(curL>l)add(--curL,cur);
         while(curR<r)add(++curR,cur);
-        while(curL<l)del(++curL,cur);
-        while(curR>r)del(--curR,cur);
+        while(curL<l)del(curL++,cur);
+        while(curR>r)del(curR--,cur);
         ans[id]=cur;
     }
 }

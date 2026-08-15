@@ -140,51 +140,44 @@ bool is_onRight(PT p,Line l)
     auto [s,t]=l;
     return sgn(cross(t-s,p-s))>=0;
 }
-vector<PT>getConvex(vector<PT>a)            //获得凸包
+vector<PT>getConvex(vector<PT>p)      //返回逆时针严格凸包，已去重
 {
-    if(a.size()<=2)return a;
-    PT st=a[0];
-    for(auto p:a)
+    sort(p.begin(),p.end());
+    p.erase(unique(p.begin(),p.end()),p.end());
+    if(p.size()<=2)return p;
+    vector<PT>h;
+    for(int t=0;t<2;t++)
     {
-        if(p.x<st.x||p.x==st.x&&p.y<st.y)
+        size_t sz=h.size();
+        for(PT q:p)
         {
-            st=p;
+            while(h.size()-sz>=2&&sgn(cross(h.back()-h[h.size()-2],q-h.back()))<=0)h.pop_back();
+            h.push_back(q);
         }
+        h.pop_back();
+        reverse(p.begin(),p.end());
     }
-    sort(begin(a),end(a),[&](PT u,PT v)
-    {
-        int f1=(u.y>st.y||u.y==st.y&&u.x>st.x)?0:1;
-        int f2=(v.y>st.y||v.y==st.y&&v.x>st.x)?0:1;
-        if(f1!=f2)return f1<f2;
-        int s=sgn(cross(u-st,v-st));
-        if(s!=0)return s>0;
-        return dot(u-st,u-st)<dot(u-st,v-st);//这里用平方判长度
-    });
-    vector<PT>ret;
-    for(auto p:a)
-    {
-        while(ret.size()>=2&&is_onRight(p,Line(ret[ret.size()-2],ret.back())))ret.pop_back();
-        ret.emplace_back(p);
-    }
-    return ret;
+    return h;
 }
 
 T RotateJam(vector<PT>&h)
 {
     //h为凸包
     int n=h.size();
-    if(n<=2)return 0;//只有2点的情况
+    if(n==1)return 0;//只有2点的情况
+    if(n==2)return dist(h[0],h[1]);
     T ans=0;//初始化
-    int j=2;
+    int j=1;
     for(int i=0;i<n;i++)
     {
         PT a=h[i],b=h[(i+1)%n];
-        while(sgn(fabs(cross(b-a,h[(j+1)%n]-a))-fabs(cross(b-a,h[j]-a)))>=0)
+        while(sgn(cross(b-a,h[(j+1)%n]-a)-cross(b-a,h[j]-a))>0)
         {
             j=(j+1)%n;
         }
         //处理答案
-        ans;
+        ans=max(ans,dist(a,h[j]));
+        ans=max(ans,dist(b,h[j]));
     }
     return ans;
 }

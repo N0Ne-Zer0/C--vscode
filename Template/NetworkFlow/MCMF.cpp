@@ -27,8 +27,8 @@ struct MCMF
 
     void add_edge(int u,int v,int cap,int cost)
     {
-        e[u].emplace_back(v,cap,cost,e[v].size());
-        e[v].emplace_back(u,0,-cost,e[u].size()-1);
+        e[u].push_back({v,cap,cost,(int)e[v].size()});
+        e[v].push_back({u,0,-cost,(int)e[u].size()-1});
     }
 
     bool SPFA()
@@ -39,12 +39,13 @@ struct MCMF
         queue<int>q;
         dist[S]=0;
         vis[S]=1;
-        q.emplace(S);
+        q.push(S);
         while(!q.empty())
         {
             int u=q.front();
             q.pop();
             vis[u]=0;
+            if(dist[u]==INF)continue;
             for(auto [v,c,m,r]:e[u])
             {
                 if(c&&dist[u]+m<dist[v])
@@ -53,7 +54,7 @@ struct MCMF
                     if(!vis[v])
                     {
                         vis[v]=1;
-                        q.emplace(v);
+                        q.push(v);
                     }
                 }
             }

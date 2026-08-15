@@ -25,7 +25,7 @@ void Prim()
     priority_queue<pair<int,int>>q;
     vector<bool>vis(n+1,0);
     int cnt=0,res=0;
-    q.emplace(0,1);
+    q.push({0,1});
     while(!q.empty())
     {
         auto [d,u]=q.top();
@@ -38,7 +38,7 @@ void Prim()
         for(auto [v,w]:edge[u])
         {
             if(vis[v])continue;
-            q.emplace(-w,v);
+            q.push({-w,v});
         }
     }
     if(cnt<n)
@@ -56,8 +56,8 @@ void sol()
     {
         int u,v,w;
         cin>>u>>v>>w;
-        edge[u].emplace_back(v,w);
-        edge[v].emplace_back(u,w);
+        edge[u].push_back({v,w});
+        edge[v].push_back({u,w});
     }
     Prim();
 }

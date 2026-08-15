@@ -56,7 +56,7 @@ struct SCC
         for(int i=1;i<=n;i++)if(!dfn[i])dfs(i);
         return sccCnt;
     }
-    void shrink()//这一部分下标都是[0,sccCnt)
+    void shrink()
     {
         dag.assign(sccCnt,{});
         indeg.assign(sccCnt,0);
@@ -79,7 +79,49 @@ struct SCC
 
 void sol()
 {
-    
+    int n,m;
+    cin>>n>>m;
+    vector<int>a(n+1);
+    SCC scc(n);
+    for(int i=1;i<=n;i++)cin>>a[i];
+    for(int i=1;i<=m;i++)
+    {
+        int u,v;
+        cin>>u>>v;
+        scc.addEdge(u,v);
+    }
+    int N=scc.run();
+    scc.shrink();
+    queue<int>q;
+    vector<int>dp(N,0),w(N,0);
+    for(int u=1;u<=n;u++)
+    {
+        w[scc.belong[u]]+=a[u];
+    }
+    for(int i=0;i<N;i++)
+    {
+        if(scc.indeg[i]==0)
+        {
+            q.push(i);
+            dp[i]=w[i];
+        }
+    }
+    while(q.size())
+    {
+        int u=q.front();
+        q.pop();
+        for(auto v:scc.dag[u])
+        {
+            dp[v]=max(dp[v],dp[u]+w[v]);
+            if(--scc.indeg[v]==0)q.push(v);
+        }
+    }
+    int ans=0;
+    for(int i=0;i<N;i++)
+    {
+        ans=max(ans,dp[i]);
+    }
+    cout<<ans<<'\n';
 }
 
 signed main()

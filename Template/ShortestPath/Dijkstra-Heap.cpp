@@ -23,7 +23,7 @@ void Dijkstra()
 {
     priority_queue<pair<int,int>>q;
     dist.assign(n+1,INF);
-    q.emplace(0,s);
+    q.push({0,s});
     dist[s]=0;
     while(!q.empty())
     {
@@ -36,7 +36,7 @@ void Dijkstra()
             if(d+w<dist[v])
             {
                 dist[v]=d+w;
-                q.emplace(-dist[v],v);
+                q.push({-dist[v],v});
             }
         }
     }
@@ -50,7 +50,7 @@ void sol()
     {
         int u,v,w;
         cin>>u>>v>>w;
-        edge[u].emplace_back(v,w);
+        edge[u].push_back({v,w});
     }
     Dijkstra();
     for(int i=1;i<=n;i++)

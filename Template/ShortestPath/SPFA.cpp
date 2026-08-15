@@ -26,13 +26,14 @@ bool SPFA()
     dist[s]=0;
     queue<int>q;
     vector<int>vis(n+1,0),cnt(n+1,0);
-    q.emplace(s);
+    q.push(s);
     vis[s]=1;
     while (!q.empty())
     {
         int u=q.front();
         q.pop();
         vis[u]=0;
+        if(dist[u]==INF)continue;
         for(auto [v,w]:edge[u])
         {
             if(dist[u]+w<dist[v])
@@ -59,7 +60,7 @@ void sol()
     {
         int u,v,w;
         cin>>u>>v>>w;
-        edge[u].emplace_back(v,w);
+        edge[u].push_back({v,w});
     }
     SPFA();
     for(int i=1;i<=n;i++)

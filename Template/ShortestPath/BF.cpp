@@ -29,6 +29,7 @@ bool BF()
         bool fg=0;
         for(int u=1;u<=n;u++)
         {
+            if(dist[u]==INF)continue;
             for(auto [v,w]:edge[u])
             {
                 if(dist[v]>dist[u]+w)
@@ -43,6 +44,7 @@ bool BF()
 
     for(int u=1;u<=n;u++)
     {
+        if(dist[u]==INF)continue;
         for(auto [v,w]:edge[u])
         {
             if(dist[v]>dist[u]+w)
@@ -62,7 +64,7 @@ void sol()
     {
         int u,v,w;
         cin>>u>>v>>w;
-        edge[u].emplace_back(v,w);
+        edge[u].push_back({v,w});
     }
     BF();
     for(int i=1;i<=n;i++)
