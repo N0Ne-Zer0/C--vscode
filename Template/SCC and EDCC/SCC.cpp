@@ -56,7 +56,7 @@ struct SCC
         for(int i=1;i<=n;i++)if(!dfn[i])dfs(i);
         return sccCnt;
     }
-    void shrink()//这一部分下标都是[0,sccCnt)
+    void buildDAG()//这一部分下标都是[0,sccCnt)
     {
         dag.assign(sccCnt,{});
         indeg.assign(sccCnt,0);

@@ -21,7 +21,7 @@ struct EDCC
 
     EDCC(int n):n(n),g(n+1),dfn(n+1),low(n+1),belong(n+1,-1){}
 
-    void addEdge(int u,int v)//无向图
+    void addEdge(int u,int v)//无向边
     {
         g[u].push_back({v,edgeCnt});
         g[v].push_back({u,edgeCnt});
@@ -83,7 +83,31 @@ struct EDCC
 
 void sol()
 {
-    
+    int n,m;
+    cin>>n>>m;
+    EDCC edcc(n);
+    for(int i=1;i<=m;i++)
+    {
+        int u,v;
+        cin>>u>>v;
+        edcc.addEdge(u,v);
+    }
+    int N=edcc.run();
+    vector<vector<int>>ans(N);
+    for(int i=1;i<=n;i++)
+    {
+        ans[edcc.belong[i]].push_back(i);
+    }
+    cout<<N<<'\n';
+    for(auto a:ans)
+    {
+        cout<<a.size()<<' ';
+        for(auto x:a)
+        {
+            cout<<x<<' ';
+        }
+        cout<<'\n';
+    }
 }
 
 signed main()
