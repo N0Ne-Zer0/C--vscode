@@ -10,19 +10,16 @@ const int MAX=0x7fffffffffffffff;
 const int mod=998244353;
 const int INF=1e9;
 
-inline bool read(int &x)
-{
+inline bool read(int &x){
     x=0;
     bool neg=0;
     int c=getchar();
-    while(!isdigit(c))
-    {
+    while(!isdigit(c)){
         if(c=='-')neg=true;
         else if(c==EOF)return false;
         c=getchar();
     }
-    while(isdigit(c))
-    {
+    while(isdigit(c)){
         x=(x<<3)+(x<<1)+c-48;
         c=getchar();
     }
@@ -30,10 +27,8 @@ inline bool read(int &x)
     return true;
 }
 
-inline void write(int x)
-{
-    if(x<0)
-    {
+inline void write(int x){
+    if(x<0){
         putchar('-');
         x=-x;
     }
@@ -41,19 +36,17 @@ inline void write(int x)
     putchar(x%10+48);
 }
 
-void sol()
-{
+void sol(){
     int a;
     read(a);
     write(a);
 }
 
-signed main()
-{
+signed main(){
     ios::sync_with_stdio(0);
     cin.tie(0);
     int T;
-    T = 1;
+    T=1;
     read(T);
     while (T--)sol();
 }

@@ -14,22 +14,17 @@ int main() {
         cout << "Error: Cannot open files!" << endl;
         return 1; // 文件打不开也视为错误
     }
-
-    // 2. 读取输入
     int n;
     fin >> n;
-
-    // 3. 读取你的输出
     int ans;
     ftest >> ans;
-
-    // 4. SPJ 校验逻辑（这里以“输出的数必须严格大于输入的数”为例）
+    //SPJ 校验逻辑（这里以“输出的数必须严格大于输入的数”为例）
     bool is_correct = false;
     if (ans > n) {
         is_correct = true; 
     }
 
-    // 5. 返回校验结果给 .bat 脚本
+    //返回校验结果给 .bat 脚本
     if (is_correct) {
         return 0; // 返回 0 代表正确 (Accepted)
     } else {

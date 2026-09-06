@@ -5,10 +5,8 @@
 using namespace std;
 #define int long long
 
-struct MCMF
-{
-    struct Edge
-    {
+struct MCMF{
+    struct Edge{
         int to,cap,cost,rev;
     };
     
@@ -17,22 +15,19 @@ struct MCMF
     vector<vector<Edge>>e;
     vector<int>cur,dist,vis;
 
-    MCMF(int n,int s,int t):N(n),S(s),T(t),MC(0),MF(0)
-    {
+    MCMF(int n,int s,int t):N(n),S(s),T(t),MC(0),MF(0){
         e.assign(n+1,vector<Edge>());
         cur.assign(n+1,0);
         dist.assign(n+1,0);
         vis.assign(n+1,0);
     }
 
-    void add_edge(int u,int v,int cap,int cost)
-    {
+    void add_edge(int u,int v,int cap,int cost){
         e[u].push_back({v,cap,cost,(int)e[v].size()});
         e[v].push_back({u,0,-cost,(int)e[u].size()-1});
     }
 
-    bool SPFA()
-    {
+    bool SPFA(){
         fill(begin(dist),end(dist),INF);
         fill(begin(vis),end(vis),0);
         fill(begin(cur),end(cur),0);        //重置当前弧
@@ -40,19 +35,15 @@ struct MCMF
         dist[S]=0;
         vis[S]=1;
         q.push(S);
-        while(!q.empty())
-        {
+        while(!q.empty()){
             int u=q.front();
             q.pop();
             vis[u]=0;
             if(dist[u]==INF)continue;
-            for(auto [v,c,m,r]:e[u])
-            {
-                if(c&&dist[u]+m<dist[v])
-                {
+            for(auto [v,c,m,r]:e[u]){
+                if(c&&dist[u]+m<dist[v]){
                     dist[v]=dist[u]+m;
-                    if(!vis[v])
-                    {
+                    if(!vis[v]){
                         vis[v]=1;
                         q.push(v);
                     }
@@ -62,13 +53,11 @@ struct MCMF
         return dist[T]!=INF;
     }
 
-    int DFS(int u,int f)
-    {
+    int DFS(int u,int f){
         if(u==T||f==0)return f;
         vis[u]=1;               //防止出现0费用环
         int ret=0;
-        for(int &i=cur[u];i<(int)e[u].size();i++)
-        {
+        for(int &i=cur[u];i<(int)e[u].size();i++){
             auto &[v,c,m,r]=e[u][i];
             if(vis[v]||c==0||dist[v]!=dist[u]+m)continue;
             int tf=DFS(v,min(f-ret,c));
@@ -83,15 +72,13 @@ struct MCMF
         return ret;
     }
 
-    void mcmf()
-    {
+    void mcmf(){
         while(SPFA())MF+=DFS(S,INF);
     }
 };
 
 
-signed main()
-{
+signed main(){
     int n,m,s,t;
     cin>>n>>m>>s>>t;
     MCMF D(n,s,t);

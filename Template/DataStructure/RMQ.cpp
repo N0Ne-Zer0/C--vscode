@@ -9,14 +9,12 @@ const int MAX=0x7fffffffffffffff;
 const int mod=1e9+7;
 
 typedef int T;
-struct RMQ
-{
+struct RMQ{
     vector<int>lg;
     vector<vector<T>>ST;
     int N;
 
-    RMQ(int n,vector<T>&a):N(n)
-    {
+    RMQ(int n,vector<T>&a):N(n){
         lg.assign(n+1,0);
         ST.assign(21,vector<T>(n+1));
         for(int i=1;i<=n;i++)ST[0][i]=a[i];
@@ -24,25 +22,20 @@ struct RMQ
         build();
     }
 
-    inline T merge(T a,T b)
-    {
+    inline T merge(T a,T b){
         return max(a,b);
     }
 
-    void build()
-    {
-        for(int i=1;i<20;i++)
-        {
+    void build(){
+        for(int i=1;i<20;i++){
             int len=1<<i;
-            for(int j=1;j+len-1<=N;j++)
-            {
+            for(int j=1;j+len-1<=N;j++){
                 ST[i][j]=merge(ST[i-1][j],ST[i-1][j+(1<<(i-1))]);
             }
         }
     }
 
-    inline T search(int l,int r)
-    {
+    inline T search(int l,int r){
         int len=r-l+1;
         int t=lg[len];
         return merge(ST[t][l],ST[t][r-(1<<t)+1]);

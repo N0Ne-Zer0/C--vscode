@@ -7,33 +7,27 @@ using namespace std;
 
 const int INF=1e18;
 
-struct DinicMaxFlow
-{
-    struct Edge
-    {
+struct DinicMaxFlow{
+    struct Edge{
         int to,cap,rev;
     };
-    
     int N,S,T;
     const int INF=2e18;
     vector<vector<Edge>>e;
     vector<int>cur,level;
 
-    DinicMaxFlow(int n,int s,int t):N(n),S(s),T(t)
-    {
+    DinicMaxFlow(int n,int s,int t):N(n),S(s),T(t){
         e.assign(n+1,{});
         cur.assign(n+1,0);
         level.assign(n+1,0);
     }
 
-    void add_edge(int u,int v,int cap)
-    {
+    void add_edge(int u,int v,int cap){
         e[u].push_back({v,cap,(int)e[v].size()});
         e[v].push_back({u,0,(int)e[u].size()-1});
     }
 
-    bool BFS()
-    {
+    bool BFS(){
         fill(begin(level),end(level),0);    //分层图
         fill(begin(cur),end(cur),0);        //重置当前弧
         queue<int>q;
@@ -53,12 +47,10 @@ struct DinicMaxFlow
         return level[T];
     }
 
-    int DFS(int u,int f)
-    {
+    int DFS(int u,int f){
         if(u==T||f==0)return f;
         int ret=0;                                  //多路增广
-        for(int &i=cur[u];i<(int)e[u].size();i++)   //&i=cur[u],当前弧优化
-        {
+        for(int &i=cur[u];i<(int)e[u].size();i++){  //&i=cur[u],当前弧优化
             auto &[v,c,r]=e[u][i];
             if(c==0||level[v]!=level[u]+1)continue;
             int tf=DFS(v,min(f-ret,c));
@@ -71,16 +63,14 @@ struct DinicMaxFlow
         return ret;
     }
 
-    int MaxFlow()
-    {
+    int MaxFlow(){
         int res=0;
         while(BFS())res+=DFS(S,INF);
         return res;
     }
 };
 
-void sol()
-{
+void sol(){
     int n,m,s,t;
     cin>>n>>m>>s>>t;
     DinicMaxFlow D(n,s,t);
@@ -93,8 +83,7 @@ void sol()
     cout<<D.MaxFlow();
 }
 
-signed main()
-{
+signed main(){
     int T=1;
     // cin>>T;
     while(T--)sol();

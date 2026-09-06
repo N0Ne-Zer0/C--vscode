@@ -12,22 +12,19 @@ const int mod=998244353;
 const int INF=1e9;
 
 const int MAXL=100;
-struct LinearBasis {
+struct LinearBasis{
     vector<int>val;
     bitset<MAXL>b[MAXL];
  
-    LinearBasis()
-    {
+    LinearBasis(){
         val.assign(MAXL,0);
         for(auto x:b)x.reset();
     }
  
-    void insert(bitset<MAXL>x,int v){
-        for(int i=MAXL-1;i>=0;i--)
-        {
+    void insert(bitset<MAXL>x,int v){//插入基
+        for(int i=MAXL-1;i>=0;i--){
             if(!x[i])continue;
-            if(b[i].none())
-            {
+            if(b[i].none()){
                 b[i]=x;
                 val[i]=v;
                 return;
@@ -37,10 +34,9 @@ struct LinearBasis {
         }
     }
  
-    int query(bitset<MAXL>x) {
+    int query(bitset<MAXL>x){//查询是否可以由基异或表示
         int res=0;
-        for(int i=MAXL-1;i>=0;i--)
-        {
+        for(int i=MAXL-1;i>=0;i--){
             if(!x[i])continue;
             if(b[i].none())return -1;
             x^=b[i];
@@ -50,13 +46,11 @@ struct LinearBasis {
     }
 };
 
-void sol()
-{
+void sol(){
     
 }
 
-signed main()
-{
+signed main(){
     ios::sync_with_stdio(0);
     cin.tie(0);
     int T;

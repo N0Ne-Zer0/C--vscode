@@ -11,52 +11,43 @@ const int MAX=0x7fffffffffffffff;
 const int mod=998244353;
 const int INF=1e9;
 
-struct Edge
-{
+struct Edge{
     int u,v,w;
-    bool operator<(const Edge&other)const
-    {
+    bool operator<(const Edge&other)const{
         return w<other.w;
     }
 };
-
 int n,m;
 vector<Edge>edge;
 vector<int>F;
 
-int Find(int x)
-{
+int Find(int x){
     if(F[x]==x)return x;
     return F[x]=Find(F[x]);
 }
 
-void Unite(int x,int f)
-{
+void Unite(int x,int f){
     F[Find(x)]=Find(f);
 }
 
-void Kruskal()
-{
+void Kruskal(){
     int cnt=1,res=0;
     iota(begin(F),end(F),0);
     sort(begin(edge),end(edge));
-    for(auto &[u,v,w]:edge)
-    {
+    for(auto &[u,v,w]:edge){
         if(Find(u)==Find(v))continue;
         Unite(u,v);
         cnt++;
         res+=w;
     }
-    if(cnt<n)
-    {
+    if(cnt<n){
         cout<<"orz";
         return;
     }
     cout<<res;
 }
 
-void sol()
-{
+void sol(){
     cin>>n>>m;
     edge.clear();
     edge.reserve(m);

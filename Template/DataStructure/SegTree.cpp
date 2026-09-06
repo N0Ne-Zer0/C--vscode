@@ -8,32 +8,27 @@ const int maxn=3e5+5;
 const int MAX=0x7fffffffffffffff;
 const int mod=1e9+7;
 
-struct SegTree
-{
+struct SegTree{
     #define mid ((l+r)>>1)
     #define ls (p<<1)
     #define rs (p<<1|1)
-    
     int n;
-    struct Info{int sum,mx,mn;};
-    struct Tag{int add=0,mul=1;};
+    struct Info{int sum,mx,mn;};//信息
+    struct Tag{int add=0,mul=1;};//标记
     vector<Info>tr;
     vector<Tag>lazy;
 
-    SegTree(int n,const vector<int>&a):n(n),tr(n*4+5),lazy(n*4+5)
-    {
+    SegTree(int n,const vector<int>&a):n(n),tr(n*4+5),lazy(n*4+5){
         build(1,1,n,a);
     }
 
-    inline Info merge(const Info& x,const Info& y)//合并信息
-    {
+    inline Info merge(const Info& x,const Info& y){//合并信息
         auto&[s1,m1,n1]=x;
         auto&[s2,m2,n2]=y;
         return {s1+s2,max(m1,m2),min(n1,n2)};
     }
 
-    inline void apply(int p,int l,int r,const Tag& t)//应用懒标记于p
-    {
+    inline void apply(int p,int l,int r,const Tag& t){//应用懒标记于p
         auto[add,mul]=t;
         auto&[s,m,n]=tr[p];
         s=s*mul+add*(r-l+1);
@@ -43,8 +38,7 @@ struct SegTree
         lazy[p].mul*=mul;
     }
 
-    inline void push(int p,int l,int r)//向下传递懒标记
-    {
+    inline void push(int p,int l,int r){//向下传递懒标记
         if(lazy[p].add==0&&lazy[p].mul==1)return;
         apply(ls,l,mid,lazy[p]);
         apply(rs,mid+1,r,lazy[p]);
@@ -53,10 +47,8 @@ struct SegTree
 
     inline void pull(int p){tr[p]=merge(tr[ls],tr[rs]);}//从子节点更新自身节点
 
-    void build(int p,int l,int r,const vector<int>& a)
-    {
-        if(l==r)
-        {
+    void build(int p,int l,int r,const vector<int>& a){
+        if(l==r){
             tr[p]={a[l],a[l],a[l]};
             return;
         }
@@ -65,10 +57,8 @@ struct SegTree
         pull(p);
     }
 
-    void update(int p,int l,int r,int ql,int qr,const Tag&t)//区间[ql,qr]+tag(*mul)
-    {
-        if(ql<=l&&r<=qr)
-        {
+    void update(int p,int l,int r,int ql,int qr,const Tag&t){//区间[ql,qr]+tag(*mul)
+        if(ql<=l&&r<=qr){
             apply(p,l,r,t);
             return;
         }
@@ -78,8 +68,7 @@ struct SegTree
         pull(p);
     }
 
-    Info query(int p,int l,int r,int ql,int qr)//查询[ql,qr]
-    {
+    Info query(int p,int l,int r,int ql,int qr){//查询[ql,qr]
         if(ql<=l&&r<=qr)return tr[p];
         push(p,l,r);
         if(qr<=mid)return query(ls,l,mid,ql,qr);

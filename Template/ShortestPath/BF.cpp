@@ -10,30 +10,22 @@ const int MAX=0x7fffffffffffffff;
 const int mod=998244353;
 const int INF=1e9;
 
-struct Edge
-{
+struct Edge{
     int v,w;
 };
-
-
 int n,m,s;
 vector<int>dist;
 vector<vector<Edge>>edge;
 
-bool BF()
-{
+bool BF(){
     dist.assign(n+1,INF);
     dist[s]=0;
-    for(int i=1;i<=n-1;i++)
-    {
+    for(int i=1;i<=n-1;i++){
         bool fg=0;
-        for(int u=1;u<=n;u++)
-        {
+        for(int u=1;u<=n;u++){
             if(dist[u]==INF)continue;
-            for(auto [v,w]:edge[u])
-            {
-                if(dist[v]>dist[u]+w)
-                {
+            for(auto [v,w]:edge[u]){
+                if(dist[v]>dist[u]+w){
                     fg=1;
                     dist[v]=dist[u]+w;
                 }
@@ -42,13 +34,10 @@ bool BF()
         if(!fg)break;
     }
 
-    for(int u=1;u<=n;u++)
-    {
+    for(int u=1;u<=n;u++){
         if(dist[u]==INF)continue;
-        for(auto [v,w]:edge[u])
-        {
-            if(dist[v]>dist[u]+w)
-            {
+        for(auto [v,w]:edge[u]){
+            if(dist[v]>dist[u]+w){
                 return 1;
             }
         }
@@ -56,25 +45,21 @@ bool BF()
     return 0;
 }
 
-void sol()
-{
+void sol(){
     cin>>n>>m>>s;
     edge.assign(n+1,vector<Edge>());
-    for(int i=1;i<=m;i++)
-    {
+    for(int i=1;i<=m;i++){
         int u,v,w;
         cin>>u>>v>>w;
         edge[u].push_back({v,w});
     }
     BF();
-    for(int i=1;i<=n;i++)
-    {
+    for(int i=1;i<=n;i++){
         cout<<dist[i]<<' ';
     }
 }
 
-signed main()
-{
+signed main(){
     ios::sync_with_stdio(0);
     cin.tie(0);
     int T;

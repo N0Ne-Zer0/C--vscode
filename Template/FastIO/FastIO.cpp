@@ -10,13 +10,10 @@ const int MAX=0x7fffffffffffffff;
 const int mod=998244353;
 const int INF=1e9;
 
-namespace FastIO
-{
+namespace FastIO{
     static char ibuf[1<<20],*ip1=ibuf,*ip2=ibuf;
-    inline char gc()
-    {
-        if(ip1==ip2)
-        {
+    inline char gc(){
+        if(ip1==ip2){
             ip2=(ip1=ibuf)+fread(ibuf,1,sizeof(ibuf),stdin);
             if(ip1==ip2)return EOF;
         }
@@ -24,26 +21,22 @@ namespace FastIO
     }
     static char obuf[1<<20],*op=obuf;
     inline void flush(){fwrite(obuf,1,op-obuf,stdout);op=obuf;}
-    inline void pc(char c)
-    {
+    inline void pc(char c){
         if(op==obuf+sizeof(obuf))flush();
         *op++=c;
     }
     template<typename T>
-    inline bool read(T &x)
-    {
+    inline bool read(T &x){
         x=0;
         char c=gc();
         bool neg=false;
-        while(!isdigit(c))
-        {
+        while(!isdigit(c)){
             if(c=='-')neg=true;
             else if(c==EOF)return false;
             c=gc();
         }
         x=0;
-        while(isdigit(c))
-        {
+        while(isdigit(c)){
             x=(x<<3)+(x<<1)+c-48;
             c=gc();
         }
@@ -51,8 +44,7 @@ namespace FastIO
         return true;
     }
     template<typename T>
-    inline void write(T x)
-    {
+    inline void write(T x){
         if(x<0){pc('-');x=-x;}
         if(x>9)write(x/10);
         pc(x%10+48);

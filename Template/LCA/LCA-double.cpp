@@ -12,35 +12,29 @@ const int mod=1e9+7;
 vector<vector<int>>edge(maxn),f(maxn,vector<int>(21));
 vector<int>h(maxn);
 
-void dfs(int x,int fa)
-{
+void dfs(int x,int fa){
     f[x][0]=fa;
     h[x]=h[fa]+1;
-    for(int i=1;i<21;i++)
-    {
+    for(int i=1;i<21;i++){
         f[x][i]=f[f[x][i-1]][i-1];
     }
-    for(auto v:edge[x])
-    {
+    for(auto v:edge[x]){
         if(v==fa)continue;
         dfs(v,x);
     }
 }
 
-int LCA(int a,int b)
-{
+int LCA(int a,int b){
     if(h[a]>h[b])swap(a,b);
     int gap=h[b]-h[a];
     int w=0;
-    while(gap)
-    {
+    while(gap){
         if(gap&1)b=f[b][w];
         gap>>=1;
         w++;
     }
     if(a==b)return a;
-    for(int i=20;i>=0;i--)
-    {
+    for(int i=20;i>=0;i--){
         if(f[a][i]==f[b][i])continue;
         a=f[a][i];
         b=f[b][i];
@@ -48,8 +42,7 @@ int LCA(int a,int b)
     return f[a][0];
 }
 
-void sol()
-{
+void sol(){
     int N,M,S;
     cin>>N>>M>>S;
     for(int i=1;i<N;i++)
@@ -68,8 +61,7 @@ void sol()
     }
 }
 
-signed main()
-{
+signed main(){
     ios::sync_with_stdio(0);
     cin.tie(0);
     int T=1;

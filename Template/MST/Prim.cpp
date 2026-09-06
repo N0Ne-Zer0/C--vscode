@@ -11,23 +11,18 @@ const int MAX=0x7fffffffffffffff;
 const int mod=998244353;
 const int INF=1e9;
 
-struct Edge
-{
+struct Edge{
     int v,w;
 };
-
-
 int n,m;
 vector<vector<Edge>>edge;
 
-void Prim()
-{
+void Prim(){
     priority_queue<pair<int,int>>q;
     vector<bool>vis(n+1,0);
     int cnt=0,res=0;
     q.push({0,1});
-    while(!q.empty())
-    {
+    while(!q.empty()){
         auto [d,u]=q.top();
         q.pop();
         d=-d;
@@ -35,25 +30,21 @@ void Prim()
         vis[u]=1;
         res+=d;
         cnt++;
-        for(auto [v,w]:edge[u])
-        {
+        for(auto [v,w]:edge[u]){
             if(vis[v])continue;
             q.push({-w,v});
         }
     }
-    if(cnt<n)
-    {
+    if(cnt<n){
         cout<<"orz";
     }
     else cout<<res;
 }
 
-void sol()
-{
+void sol(){
     cin>>n>>m;
     edge.assign(n+1,{});
-    for(int i=1;i<=m;i++)
-    {
+    for(int i=1;i<=m;i++){
         int u,v,w;
         cin>>u>>v>>w;
         edge[u].push_back({v,w});
@@ -62,8 +53,7 @@ void sol()
     Prim();
 }
 
-signed main()
-{
+signed main(){
     ios::sync_with_stdio(0);
     cin.tie(0);
     int T;

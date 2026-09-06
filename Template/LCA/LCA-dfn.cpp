@@ -12,42 +12,35 @@ const int mod=1e9+7;
 vector<vector<int>>edge(maxn),ST(maxn,vector<int>(21));
 vector<int>dfn,h(maxn),ft(maxn),lg(maxn),f(maxn);
 
-void dfs(int x,int fa)
-{
+void dfs(int x,int fa){
     h[x]=h[fa]+1;
     f[x]=fa;
     ft[x]=dfn.size();
     dfn.push_back(x);
-    for(auto v:edge[x])
-    {
+    for(auto v:edge[x]){
         if(v==fa)continue;
         dfs(v,x);
     }
 }
 
-int MIN(int a,int b)
-{
+int MIN(int a,int b){
     if(h[f[a]]<h[f[b]])return a;
     else return b;
 }
 
-void build_ST()
-{
+void build_ST(){
     for(int i=0;i<dfn.size();i++)ST[i][0]=dfn[i];
     lg[1]=0;
     for(int i=2;i<=dfn.size();i++)lg[i]=lg[i/2]+1;
-    for(int i=1;i<21;i++)
-    {
+    for(int i=1;i<21;i++){
         int len=1<<i;
-        for(int j=0;j+len<=dfn.size();j++)
-        {
+        for(int j=0;j+len<=dfn.size();j++){
             ST[j][i]=MIN(ST[j][i-1],ST[j+(1<<(i-1))][i-1]);
         }
     }
 }
 
-int LCA(int a,int b)
-{
+int LCA(int a,int b){
     if(a==b)return a;
     int l=ft[a],r=ft[b];
     if(l>r)swap(l,r);
@@ -57,8 +50,7 @@ int LCA(int a,int b)
     return f[res];
 }
 
-void sol()
-{
+void sol(){
     int N,M,S;
     cin>>N>>M>>S;
     for(int i=1;i<N;i++)
@@ -78,8 +70,7 @@ void sol()
     }
 }
 
-signed main()
-{
+signed main(){
     ios::sync_with_stdio(0);
     cin.tie(0);
     int T=1;
