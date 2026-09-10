@@ -24,7 +24,7 @@ struct Trie{
         for(char ch:s){
             int c=ch-'a';
             if(!tr[p].nxt[c]){
-                tr[p].nxt[c]=(int)tr.size();
+                tr[p].nxt[c]=tr.size();
                 tr.push_back({});
             }
             p=tr[p].nxt[c];

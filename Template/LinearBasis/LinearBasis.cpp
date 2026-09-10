@@ -18,7 +18,7 @@ struct LinearBasis{
  
     LinearBasis(){
         val.assign(MAXL,0);
-        for(auto x:b)x.reset();
+        for(auto&x:b)x.reset();
     }
  
     void insert(bitset<MAXL>x,int v){//插入基

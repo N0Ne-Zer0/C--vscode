@@ -25,6 +25,15 @@ struct DSU{
     int size(int x){return sz[find(x)];}//返回组大小
     int groups()const{return cnt;}//返回组数
 };
+struct DSUnext{
+    vector<int>fa;
+    DSUnext(int n):fa(n+2){
+        iota(fa.begin(),fa.end(),0);
+    }
+    int find(int x){return fa[x]==x?x:fa[x]=find(fa[x]);}//路径压缩查找
+    //占用x
+    void use(int x){fa[x]=find(x+1);}
+};
 
 
 void sol(){
