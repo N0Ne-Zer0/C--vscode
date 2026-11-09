@@ -1,0 +1,24 @@
+#include<bits/stdc++.h>
+using namespace std;
+#define int long long
+
+const int maxn=5e5+5;
+const int MAX=0x7fffffffffffffff;
+const int mod=998244353;
+const int INF=1e9;
+
+
+void sol(){
+    int n,k;
+    cin>>n>>k;
+    for(int i=1;i<=k;i++)cout<<i<<' ';
+}
+
+signed main(){
+    ios::sync_with_stdio(0);
+    cin.tie(0);
+    int T;
+    T = 1;
+    // cin>>T;
+    while (T--)sol();
+}
